@@ -1,22 +1,23 @@
 class Signup
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
-  extend ActiveModel::Naming
+  include ActiveModel::Model
 
-  attr_reader :company, :user
+  include Virtus.model
 
-  attr_accessor :name, :company_name, :email
+  attr_reader :user
+  attr_reader :company
 
-  def initialize(params={})
-    params.each do |param, value|
-      self.public_send(:"#{param}=", value)
-    end
-  end
+  attribute :name, String
+  attribute :company_name, String
+  attribute :email, String
 
   validates :company_name, presence: true
   validates :email, presence: true
   validates :name, presence: true
   validate :email_uniqueness
+
+  def persisted?
+    false
+  end
 
   def save
     if valid?
@@ -25,10 +26,6 @@ class Signup
     else
       false
     end
-  end
-
-  def persisted?
-    false
   end
 
   private
