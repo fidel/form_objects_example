@@ -19,10 +19,12 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
-  <div class="field">
-    <%= f.label :company_id %><br>
-    <%= f.number_field :company_id %>
-  </div>
+  <%= f.fields_for :company do |c| %>
+    <div class="field">
+      <%= c.label :name %><br>
+      <%= c.text_field :name %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>

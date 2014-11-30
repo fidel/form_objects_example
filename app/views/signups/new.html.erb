@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+<h1>New signup</h1>
+
+<%= form_for(@company, url: signups_path) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+
+      <ul>
+      <% @company.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :company_name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <%= f.fields_for :users, @user do |uf| %>
+    <div class="field">
+      <%= uf.label :email %><br>
+      <%= uf.text_field :email %>
+    </div>
+    <div class="field">
+      <%= uf.label :name %><br>
+      <%= uf.text_field :name %>
+    </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit "Signup" %>
+  </div>
+<% end %>
