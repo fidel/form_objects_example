@@ -7,7 +7,7 @@ class SignupsController < ApplicationController
     @signup = Signup.new(signup_params)
 
     respond_to do |format|
-      if @signup.save
+      if signup_service.call(@signup)
         format.html { redirect_to new_signup_path, notice: 'Signup successfull.' }
       else
         format.html { render new_signup_path }
@@ -19,5 +19,9 @@ class SignupsController < ApplicationController
 
   def signup_params
     params.require(:signup).permit(:company_name, :name, :email)
+  end
+
+  def signup_service
+    @signup_service ||= SignupService.new
   end
 end
