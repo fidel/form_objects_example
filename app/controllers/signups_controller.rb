@@ -1,14 +1,13 @@
 class SignupsController < ApplicationController
   def new
-    @company = Company.new
-    @user    = @company.users.build
+    @signup = Signup.new
   end
 
   def create
-    @company = Company.new(company_params)
+    @signup = Signup.new(signup_params)
 
     respond_to do |format|
-      if @company.save
+      if @signup.save
         format.html { redirect_to new_signup_path, notice: 'Signup successfull.' }
       else
         format.html { render new_signup_path }
@@ -18,7 +17,7 @@ class SignupsController < ApplicationController
 
   private
 
-  def company_params
-    params.require(:company).permit(:name, users_attributes: [:name, :email])
+  def signup_params
+    params.require(:signup).permit(:company_name, :name, :email)
   end
 end
